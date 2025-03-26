@@ -1,0 +1,37 @@
+:root {
+  /* 浅色主题变量 */
+  --color-bg: #ffffff;
+  --color-text: #333333;
+  --color-primary: #42b983;
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  /* 深色主题变量 */ 
+  --color-bg: #1a1a1a;
+  --color-text: #f0f0f0;
+  --color-primary: #33a06f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a1a;
+    --color-text: #f0f0f0;
+    --color-primary: #33a06f;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: 
+    background-color var(--transition-speed),
+    color var(--transition-speed);
+}
+
+.theme-toggle {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>主题切换示例</title>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <header>
+    <h1>NAS导航系统</h1>
+    <button class="theme-toggle" id="themeToggle">
+      <svg><!-- 主题切换图标 --></svg>
+    </button>
+  </header>
+
+  <main>
+    <p>当前主题: <span id="themeStatus">自动</span></p>
+  </main>
+
+  <script>
+    // 检测系统主题偏好
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // 主题切换逻辑
+    const themeToggle = document.getElementById('themeToggle');
+    const themeStatus = document.getElementById('themeStatus');
+    
+    function updateTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const isDark = savedTheme === 'dark' || 
+                    (savedTheme === null && prefersDark.matches);
+      
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+      themeStatus.textContent = savedTheme ? (isDark ? '深色' : '浅色') : '自动';
+    }
+
+    // 切换主题
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = localStorage.getItem('theme');
+      let newTheme = null;
+      
+      if (!currentTheme) {
+        newTheme = prefersDark.matches ? 'light' : 'dark';
+      } else {
+        newTheme = currentTheme === 'dark' ? 'light' : null;
+      }
+      
+      if (newTheme) {
+        localStorage.setItem('theme', newTheme);
+      } else {
+        localStorage.removeItem('theme');
+      }
+      
+      updateTheme();
+    });
+
+    // 监听系统主题变化
+    prefersDark.addEventListener('change', updateTheme);
+    updateTheme();
+  </script>
+</body>
+</html>
