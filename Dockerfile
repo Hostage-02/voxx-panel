@@ -11,7 +11,8 @@ FROM nginx:alpine
 # 多架构构建支持
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
-RUN echo "Building for $TARGETPLATFORM on $BUILDPLATFORM"
+ARG TARGETARCH
+RUN echo "Building for $TARGETARCH on $BUILDPLATFORM"
 LABEL org.opencontainers.image.architecture=$TARGETARCH
 
 # 配置nginx
